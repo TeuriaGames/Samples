@@ -1,8 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Numerics;
+using System.Threading;
 using Riateu;
 using Riateu.Audios;
 using Riateu.Components;
 using Riateu.Graphics;
+using Riateu.Inputs;
 using Riateu.Physics;
 
 namespace Pong;
@@ -12,17 +17,17 @@ public class Ball : Entity
     public Vector2 Velocity;
     private AnimatedSprite sprite;
     private const float SpeedLimitX = 80f;
-    private const float SpeedLimitY = 1.0f;
+    private const float SpeedLimitY = 5f;
     public float Speed = 100.0f;
 
     public Ball() 
     {
-        sprite = AnimatedSprite.Create(Resource.Atlas, Resource.Animations["pong/ball"]);
+        sprite = AnimatedSprite.Create(Resource.Animations["pong/ball"]);
         sprite.FPS = 10;
         sprite.Play("idle");
         AddComponent(sprite);
 
-        AddComponent(new PhysicsComponent(new AABB(this, new Rectangle(0, 0, 8, 8))));
+        AddComponent(new Collision(new AABB(this, 0, 0, 8, 8)));
     }
 
     public override void Update(double delta)
@@ -31,8 +36,11 @@ public class Ball : Entity
         Velocity.X = MathUtils.Clamp(Velocity.X, -SpeedLimitX, SpeedLimitX);
         Velocity.Y = MathUtils.Clamp(Velocity.Y, -SpeedLimitY, SpeedLimitY);
 
-        PosX += Velocity.X * fDelta * Speed;
-        PosY += Velocity.Y * fDelta * Speed;
+        int velX = (int)Math.Round(Velocity.X * fDelta * Speed);
+        int velY = (int)Math.Round(Velocity.Y * fDelta * Speed);
+
+        PosX += velX;
+        PosY += velY;
 
         if (PosY > PingPongGame.ViewportHeight - 8) 
         {

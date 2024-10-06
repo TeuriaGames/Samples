@@ -1,3 +1,4 @@
+using System;
 using System.Numerics;
 using Riateu;
 using Riateu.Audios;
@@ -6,22 +7,24 @@ using Riateu.Inputs;
 using Riateu.Physics;
 
 namespace Pong;
+
+
 public class Paddle : Entity 
 {
-    private SpriteRenderer sprite;
+    private Sprite sprite;
     private KeyCode up;
     private KeyCode down;
-    private PhysicsComponent area;
+    private Collision area;
     private bool left;
     public const float Speed = 100.0f;
 
     public Paddle(KeyCode up, KeyCode down, bool left = true) 
     {
-        sprite = new SpriteRenderer(Resource.Atlas, Resource.Atlas["pong/paddle"]);
+        sprite = new Sprite(Resource.Atlas["pong/paddle"]);
         sprite.FlipX = !left;
         AddComponent(sprite);
 
-        AddComponent(area = new PhysicsComponent(new AABB(this, 0, 0, 4, 24)));
+        AddComponent(area = new Collision(new AABB(this, 0, 0, 4, 24)));
         this.up = up;
         this.down = down;
         this.left = left;
@@ -32,7 +35,10 @@ public class Paddle : Entity
         float deltaFloat = (float)delta;
         var axis = GetAxis(up, down);
 
-        PosY += axis * Speed * deltaFloat;
+        float vel = axis * Speed * deltaFloat;
+        int roundedVel = (int)Math.Round(vel);
+
+        PosY += roundedVel;
         if (PosY > PingPongGame.ViewportHeight - 24) 
         {
             PosY = PingPongGame.ViewportHeight - 24;
@@ -49,10 +55,10 @@ public class Paddle : Entity
             {
                 ball.Velocity.X *= -1;
                 ball.Velocity.Y += 100 * 0.005f;
-                Audio.PlaySound(Resource.HitSound);
+                Audio.PlaySound(Resource.HitSound, pan: lVal);
             }
         }
-        
+
         base.Update(delta);
     }
 
@@ -66,6 +72,7 @@ public class Paddle : Entity
         {
             return 1;
         }
+
         return 0;
     }
 }

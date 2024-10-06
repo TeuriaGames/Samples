@@ -1,6 +1,5 @@
 using System.Numerics;
 using Riateu;
-using Riateu.Audios;
 using Riateu.Graphics;
 using Riateu.Inputs;
 
@@ -12,6 +11,8 @@ public class SimpleScene : Scene
     private int[] scores;
     private Batch batch;
     private string scoreText = "0     0";
+    private Paddle player1;
+    private Paddle player2;
 
     public SimpleScene(GameApp game) : base(game) 
     {
@@ -21,10 +22,10 @@ public class SimpleScene : Scene
 
     public override void Begin()
     {
-        var player1 = new Paddle(KeyCode.W, KeyCode.S);
+        player1 = new Paddle(KeyCode.W, KeyCode.S);
         player1.PosY = (PingPongGame.ViewportHeight * 0.5f) - 12;
         Add(player1);
-        var player2 = new Paddle(KeyCode.Up, KeyCode.Down, false);
+        player2 = new Paddle(KeyCode.Up, KeyCode.Down, false);
         player2.PosX = PingPongGame.ViewportWidth - 4;
         player2.PosY = (PingPongGame.ViewportHeight * 0.5f) - 12;
         Add(player2);
@@ -46,7 +47,7 @@ public class SimpleScene : Scene
             scores[1] += 1;
             scoreText = $"{scores[0]}     {scores[1]}";
         }
-        else if (ball.PosX > PingPongGame.ViewportWidth + 30) 
+        else if (ball.PosX > PingPongGame.ViewportWidth + 22) 
         {
             ball.Position = new Vector2((PingPongGame.ViewportWidth * 0.5f) - 8, (PingPongGame.ViewportHeight * 0.5f) - 4);
             ball.Velocity = new Vector2(1, 0);

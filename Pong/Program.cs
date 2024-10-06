@@ -9,10 +9,9 @@ internal interface Program
     [STAThread]
     protected internal static void Main(string[] args) 
     {
-
         var helloGame = new PingPongGame(
             new WindowSettings("Ping Pong", 1024, 640, WindowMode.Windowed),
-            GraphicsSettings.Vsync
+            GraphicsSettings.DebugVSync
         );
         helloGame.Run();
     }
