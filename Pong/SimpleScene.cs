@@ -62,7 +62,7 @@ public class SimpleScene : Scene
 
     public override void Render(RenderTarget backbuffer)
     {
-        batch.Begin(Resource.Atlas, DrawSampler.PointClamp, camera);
+        batch.Begin(Resource.Atlas.Data, DrawSampler.PointClamp, camera);
         EntityList.Draw(batch);
         batch.End();
         batch.Begin(Resource.PressStart2PFont.Texture, DrawSampler.PointClamp, camera);

@@ -1,13 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Numerics;
-using System.Threading;
 using Riateu;
 using Riateu.Audios;
 using Riateu.Components;
-using Riateu.Graphics;
-using Riateu.Inputs;
 using Riateu.Physics;
 
 namespace Pong;

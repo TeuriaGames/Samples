@@ -8,7 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Riateu" Version="0.9.0" />
+    <!-- <PackageReference Include="Riateu" Version="0.9.0" /> -->
+    <ProjectReference Include="../../Riateu/Riateu/Riateu.csproj" />
   </ItemGroup>
 
   <ItemGroup>

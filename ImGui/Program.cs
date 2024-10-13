@@ -11,7 +11,7 @@ namespace ImGui;
 
 public class ImGuiGame : GameApp
 {
-    private Atlas atlas;
+    private Ref<Atlas> atlas;
     public ImGuiGame(WindowSettings settings, GraphicsSettings graphicsSettings) : base(settings, graphicsSettings)
     {
     }

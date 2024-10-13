@@ -20,7 +20,7 @@ public class Paddle : Entity
 
     public Paddle(KeyCode up, KeyCode down, bool left = true) 
     {
-        sprite = new Sprite(Resource.Atlas["pong/paddle"]);
+        sprite = new Sprite(Resource.Atlas.Data["pong/paddle"]);
         sprite.FlipX = !left;
         AddComponent(sprite);
 
